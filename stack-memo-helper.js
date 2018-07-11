@@ -24,6 +24,7 @@ var app = new Vue({
 	this.current_position = this.randomPosition();
 	this.card_choices = this.randomPositions(1+this.deck.indexOf(this.current_card));
 	this.position_choices = this.randomCards(this.deck[this.current_position - 1]);
+	this.page = this.load("page") || "card2position";
   },
   data: {
 	current_card: null,
@@ -33,7 +34,7 @@ var app = new Vue({
 	deck: tamariz,
 	card_choices: null,
 	position_choices: null,
-	page: "card2position",
+	page: null,
 	number_of_choices: 8
   },
   methods: {
@@ -74,6 +75,15 @@ var app = new Vue({
 	{
 		this.current_position = this.randomPosition();
 		this.position_choices = this.randomCards(this.deck[this.current_position-1]);
+	},
+	save: function(key, value)
+	{
+		localStorage.setItem(key, value);
+		return value;
+	},
+	load: function(key)
+	{
+		return localStorage.getItem(key);
 	}
   }
 })

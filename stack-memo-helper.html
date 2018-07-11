@@ -29,10 +29,10 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item" v-bind:class="page=='card2number'?'active':''">
-        <a class="nav-link" href="#"  @click.prevent="page='card2position'">Card to Position </a>
+        <a class="nav-link" href="#" @click.prevent="page = save('page', 'card2position')">Card to Position </a>
       </li>
       <li class="nav-item" v-bind:class="page=='number2card'?'active':''">
-        <a class="nav-link" href="#"  @click.prevent="page='position2card'">Position to Card </a>
+        <a class="nav-link" href="#" @click.prevent="page = save('page', 'position2card')">Position to Card </a>
       </li>
     </ul>
   </div>
@@ -55,7 +55,7 @@
 <div v-if="page == 'position2card'">  
 	<div id="card">
 		<div class="row">
-			<div class="col text-center border">{{current_position}}</div>
+			<div class="col text-center border font-weight-bold">{{current_position}}</div>
 		</div>
 	</div>
 	<div class="row">
