@@ -9,11 +9,7 @@ var app = new Vue({
   el: '#stack-memo-helper',
   created: function()
   {
-	this.current_card = this.randomCard();
-	this.current_position = this.randomPosition();
-	this.card_choices = this.randomPositions(1+this.deck.indexOf(this.current_card));
-	this.position_choices = this.randomCards(this.deck[this.current_position - 1]);
-	this.page = this.load("page") || "card2position";
+	this.init();
   },
   data: {
 	current_card: null,
@@ -24,9 +20,40 @@ var app = new Vue({
 	card_choices: null,
 	position_choices: null,
 	page: null,
-	number_of_choices: 8
+	number_of_choices: parseInt(localStorage.getItem("number_of_choices")) || 8
+  },
+  watch:{
+	number_of_choices: function(val)
+	{
+		this.init();
+	}
+  },
+  computed: {
+	number_of_choices_in_percent: function()
+	{
+		return "width: " + 10 * this.number_of_choices + "%";
+	}
   },
   methods: {
+	add: function()
+	{
+		if(this.number_of_choices < 10) this.number_of_choices++; 
+		localStorage.setItem("number_of_choices", this.number_of_choices);
+	},
+	sub: function()
+	{
+		if(this.number_of_choices >2) this.number_of_choices--; 
+		localStorage.setItem("number_of_choices", this.number_of_choices);
+	},
+	
+	init: function()
+	{
+		this.current_card = this.randomCard();
+		this.current_position = this.randomPosition();
+		this.card_choices = this.randomPositions(1+this.deck.indexOf(this.current_card));
+		this.position_choices = this.randomCards(this.deck[this.current_position - 1]);
+		this.page = this.load("page") || "card2position";
+	},
 	randomPosition: function()
 	{
 		return 1+Math.floor(this.deck.length * Math.random());

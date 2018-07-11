@@ -21,7 +21,7 @@
 <body >
 <div id="stack-memo-helper" class="container-fluid">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="">Stack Memo Helper </a>
+  <a class="navbar-brand" href="">Stack Memo Helper</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -68,6 +68,19 @@
 		</div>
 	</div>
 </div>
+
+<div v-if="page == 'settings'" class="row align-items-center">  
+	<div class="col-4"><label class="col" for="number-of-choices">Number of Choices</label></div>
+	<div class="col-6">
+		<div class="progress" style="height: 40px;">
+			<div class="progress-bar bg-success" role="progressbar" v-bind:style="number_of_choices_in_percent" v-bind:aria-valuenow="number_of_choices" aria-valuemin="2" aria-valuemax="10">{{number_of_choices}}</div>
+		</div>
+	</div>
+	<div class="col-1 px-1 py-2"><button type="button" class="col  btn btn-primary btn-lg" @click="sub()">-</button></div>
+	<div class="col-1 px-1 py-2"><button type="button" class="col  btn btn-primary btn-lg" @click="add()">+</button></div>
+
+</div>
+
 
 <!-- Modal -->
 <div class="modal fade" id="wrongCardModal" tabindex="-1" role="dialog" aria-hidden="true">
