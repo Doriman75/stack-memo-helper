@@ -3,18 +3,7 @@ var tamariz = [
 					"8H", "6S", "5S", "9H", "KC", "2D", "JH", "3S", "8S", "6H", "10C", "5D", "KD",
 					"2C", "3H", "8D", "5C", "KS", "JD", "8C", "10S", "KH", "JC", "7S", "10H", "AD",
 					"4S", "7H", "4D", "AC", "9C", "JS", "QD", "7C", "QS", "10D", "6C", "AH", "9D"
-				]
-var symbols = { "C": "&clubs;", "S": "&spades;", "H": "&hearts;", "D": "&diams;"}
-
-Vue.component("card", {
-	props: ['name'],	
-	data: function() {
-	return {
-		symbols: { "C": "&clubs;", "S": "&spades;", "H": "&hearts;", "D": "&diams;"}
-		}
-	},
-	template: '<span v-if="name" class="font-weight-bold" v-bind:class="name.charAt(name.length - 1)"><span>{{name.substring(0, name.length - 1)}}</span><span v-html="symbols[name.substring(name.length - 1)]"></span></span>'
-});
+				];
 
 var app = new Vue({
   el: '#stack-memo-helper',

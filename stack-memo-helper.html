@@ -26,6 +26,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
+  
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item" v-bind:class="page=='card2number'?'active':''">
@@ -34,11 +35,14 @@
       <li class="nav-item" v-bind:class="page=='number2card'?'active':''">
         <a class="nav-link" href="#" @click.prevent="page = save('page', 'position2card')">Position to Card </a>
       </li>
+      <li class="nav-item" v-bind:class="page=='settings'?'active':''">
+        <a class="nav-link" href="#" @click.prevent="page = save('page', 'settings')">Settings </a>
+      </li>
     </ul>
   </div>
 </nav>
 
-<div v-if="page == 'card2position'">  
+<div v-if="page == 'card2position'">
 	<div id="card">
 		<div class="row">
 			<div class="col text-center border "><card v-bind:name="current_card"></card></div>
@@ -73,7 +77,7 @@
         <h5 class="modal-title">Wrong Card!</h5>
       </div>
       <div class="modal-body">
-        <div style="font-size:2em" class="col text-center">
+        <div style="font-size:1.5em" class="col text-center">
 			the position of <card v-bind:name="correct_card"></card> is {{ 1+ deck.indexOf(correct_card) }}
 		</div>
       </div>
@@ -93,7 +97,7 @@
         <h5 class="modal-title">Wrong Position!</h5>
       </div>
       <div class="modal-body">
-        <div style="font-size:2em" class="col text-center">
+        <div style="font-size:1.5em" class="col text-center">
 			the card at position {{correct_position}} is <card v-bind:name="deck[correct_position-1]"></card>
 		</div>
       </div>
@@ -105,6 +109,7 @@
 </div>
 
 </div>
+<script src="card.vue.js"></script>
 <script src="stack-memo-helper.js"></script>
 
 </body>
