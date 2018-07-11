@@ -91,7 +91,9 @@
       </div>
       <div class="modal-body">
         <div style="font-size:1.5em" class="col text-center">
-			the position of <card v-bind:name="correct_card"></card> is {{ 1+ deck.indexOf(correct_card) }}
+			the position of <card v-bind:name="correct_card"></card> is 
+			<br>
+			{{ 1+ deck.indexOf(correct_card) }}
 		</div>
       </div>
       <div class="modal-footer">
@@ -111,7 +113,9 @@
       </div>
       <div class="modal-body">
         <div style="font-size:1.5em" class="col text-center">
-			the card at position {{correct_position}} is <card v-bind:name="deck[correct_position-1]"></card>
+			the card at position {{correct_position}} is 
+			<br>
+			<card v-bind:name="deck[correct_position-1]"></card>
 		</div>
       </div>
       <div class="modal-footer">
