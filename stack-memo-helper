@@ -1,0 +1,194 @@
+<html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="bootstrap.min.css">
+<script src="vue.js"></script>
+<script src="jquery-3.2.1.slim.min.js"></script>
+<script src="popper.js"></script>
+<script src="bootstrap.min.js"></script>
+
+<style>
+.C, .S{
+	color: black;
+}
+.H, .D{
+	color: red;
+}
+
+#card {
+	font-size: 8em;
+}
+</style>
+<body >
+<div id="stack-memo-helper" class="container-fluid">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="">Stack Memo Helper </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" v-bind:class="page=='card2number'?'active':''">
+        <a class="nav-link" href="#"  @click.prevent="page='card2position'">Card to Position </a>
+      </li>
+      <li class="nav-item" v-bind:class="page=='number2card'?'active':''">
+        <a class="nav-link" href="#"  @click.prevent="page='position2card'">Position to Card </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div v-if="page == 'card2position'">  
+	<div id="card">
+		<div class="row">
+			<div class="col text-center border "><card v-bind:name="current_card"></card></div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-6 px-1 py-2" v-for="(position) in card_choices">
+		<button class="btn btn-warning btn-lg btn-block col"  v-on:click="guessCard(position)">{{position}}</button>
+		</div>
+	</div>
+</div>
+
+
+<div v-if="page == 'position2card'">  
+	<div id="card">
+		<div class="row">
+			<div class="col text-center border">{{current_position}}</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-6 px-1 py-2" v-for="(card) in position_choices">
+		<button class="btn btn-warning btn-lg btn-block col"  v-on:click="guessNumber(card)"><card v-bind:name="card"></card></button>
+		</div>
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="wrongCardModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title">Wrong Card!</h5>
+      </div>
+      <div class="modal-body">
+        <div style="font-size:2em" class="col text-center">
+			the position of <card v-bind:name="correct_card"></card> is {{ 1+ deck.indexOf(correct_card) }}
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="newCard()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="wrongPositionModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title">Wrong Position!</h5>
+      </div>
+      <div class="modal-body">
+        <div style="font-size:2em" class="col text-center">
+			the card at position {{correct_position}} is <card v-bind:name="deck[correct_position-1]"></card>
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="newPosition()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+
+
+<script>
+var tamariz = [ 
+					"4C", "2H", "7D", "3C", "4H", "6D", "AS", "5H", "9S", "2S", "QH", "3D", "QC",
+					"8H", "6S", "5S", "9H", "KC", "2D", "JH", "3S", "8S", "6H", "10C", "5D", "KD",
+					"2C", "3H", "8D", "5C", "KS", "JD", "8C", "10S", "KH", "JC", "7S", "10H", "AD",
+					"4S", "7H", "4D", "AC", "9C", "JS", "QD", "7C", "QS", "10D", "6C", "AH", "9D"
+				]
+var symbols = { "C": "&clubs;", "S": "&spades;", "H": "&hearts;", "D": "&diams;"}
+
+Vue.component("card", {
+	props: ['name'],	
+	data: function() {
+	return {
+		symbols: { "C": "&clubs;", "S": "&spades;", "H": "&hearts;", "D": "&diams;"}
+		}
+	},
+	template: '<span v-if="name" class="font-weight-bold" v-bind:class="name.charAt(name.length - 1)"><span>{{name.substring(0, name.length - 1)}}</span><span v-html="symbols[name.substring(name.length - 1)]"></span></span>'
+});
+
+var app = new Vue({
+  el: '#stack-memo-helper',
+  created: function()
+  {
+	this.current_card = this.randomCard();
+	this.current_position = this.randomPosition();
+	this.card_choices = this.randomPositions(1+this.deck.indexOf(this.current_card));
+	this.position_choices = this.randomCards(this.deck[this.current_position - 1]);
+  },
+  data: {
+	current_card: null,
+	correct_card: null,
+	current_position: null,
+	correct_position: null,
+	deck: tamariz,
+	card_choices: null,
+	position_choices: null,
+	page: "card2position",
+	number_of_choices: 8
+  },
+  methods: {
+	randomPosition: function()
+	{
+		return 1+Math.floor(this.deck.length * Math.random());
+	},
+	randomPositions: function(fixed)
+	{
+		let set = new Set([fixed]);
+		while(set.size < this.number_of_choices) set.add(this.randomPosition());
+		return Array.from(set).sort((a, b) => a - b);
+	},
+	randomCards: function(fixed)
+	{
+		let set = new Set([fixed]);
+		while(set.size < this.number_of_choices) set.add(this.randomCard());
+		return Array.from(set).sort();
+	},
+	randomCard: function()
+	{
+		return this.deck[this.randomPosition()-1];
+	},
+	guessCard: function(guess) {
+		this.correct_card = this.current_card;
+		if(this.deck[guess-1] != this.current_card) $('#wrongCardModal').modal('show'); else this.newCard();
+	},
+	guessNumber: function(guess) {
+		this.correct_position = this.current_position;
+		if(this.deck[this.current_position-1] != guess) $('#wrongPositionModal').modal('show'); else this.newPosition();
+	},
+	newCard: function()
+	{
+		this.current_card = this.randomCard();
+		this.card_choices = this.randomPositions(1+this.deck.indexOf(this.current_card));		
+	},
+	newPosition: function()
+	{
+		this.current_position = this.randomPosition();
+		this.position_choices = this.randomCards(this.deck[this.current_position-1]);
+	}
+  }
+})
+
+</script>
+</html>
