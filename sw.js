@@ -5,7 +5,7 @@ self.addEventListener('install', e => {
     caches.open('smh_service_worker').then(cache => {
       return cache.addAll([
 		'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
-        '/stack-memo-helper/index.html',
+        'index.html',
 		'open-iconic-bootstrap.min.css',
 		'https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js',
 		'https://code.jquery.com/jquery-3.2.1.slim.min.js',
@@ -20,7 +20,7 @@ self.addEventListener('install', e => {
   )
 });
 
-window.addEventListener('beforeinstallprompt', (e) => {
+self.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
 	console.log("ready to install");
 });
