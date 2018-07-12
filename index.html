@@ -24,7 +24,7 @@
 <body >
 <div id="stack-memo-helper" class="container-fluid">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="">Stack Memo Helper <small><strong>{{current_stack}}</strong></small></a>
+  <a class="navbar-brand" href="">Stack Memo Helper </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -46,6 +46,7 @@
 </nav>
 
 <div v-if="page == 'card2position'">
+	<small><strong>{{current_stack}}</strong></small>
 	<div id="card">
 		<div class="row">
 			<div class="col text-center border "><card v-bind:name="current_card"></card></div>
@@ -60,6 +61,7 @@
 
 
 <div v-if="page == 'position2card'">  
+	<small><strong>{{current_stack}}</strong></small>
 	<div id="card">
 		<div class="row">
 			<div class="col text-center border font-weight-bold">{{current_position}}</div>
