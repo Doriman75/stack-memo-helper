@@ -12,6 +12,13 @@ var aronson = [
 					"3C", "2S", "9H", "KS", "6S", "4C", "8H", "9C", "QS", "6D", "QC", "2C", "9D" 
 ];
 
+var nikola = [
+					"6D", "5C", "KC", "JH", "5S", "9D", "9S", "QH", "3C", "10C", "KS", "AH", "4D", 
+					"JD", "KD", "KH", "2D", "QC", "9C", "10H", "8D", "2C", "AC", "7H", "7C", "4S", 
+					"7S", "9H", "8S", "6S", "6C", "2H", "AS", "JS", "4C", "5H", "10S", "AD", "JC", 
+					"4H", "2S", "7D", "QS", "3H", "3S", "8C", "10D", "6H", "5D", "3D", "QD", "8H"
+];
+
 var app = new Vue({
   el: '#stack-memo-helper',
   created: function()
@@ -26,7 +33,8 @@ var app = new Vue({
 	view_stacks: {},
 	decks: {
 		"Tamariz": tamariz,
-		"Aronson": aronson
+		"Aronson": aronson,
+		"Nikola": nikola
 	},
 	deck: null,
 	card_choices: null,

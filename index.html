@@ -94,12 +94,24 @@
 				<button type="button" class="mx-1 col-2 btn btn-info btn-sm" @click="toggleViewStacks(name)">{{!view_stacks[name]? 'View':'Hide'}}</button>				
 			</div>
 			<div class="row py-2" v-if="view_stacks[name]">
-				<table class="table table-sm table-striped">
+				<table class="table table-sm table-striped table-bordered">
 					<tr v-for="(card, index) in stack.length/4">
-						<td>{{1+(card - 1) * 4}}</td><td class="small border-right"><card v-bind:name="stack[(card - 1) * 4]"></card></td>
-						<td>{{2+(card - 1) * 4}}</td><td class="small border-right"><card v-bind:name="stack[1+(card - 1) * 4]"></card></td>
-						<td>{{3+(card - 1) * 4}}</td><td class="small border-right"><card v-bind:name="stack[2+(card - 1) * 4]"></card></td>
-						<td>{{4+(card - 1) * 4}}</td><td class="small"><card v-bind:name="stack[3+(card - 1) * 4]"></card></td>
+						<td class="text-center">
+							{{1+(card - 1) * 4}}<br>
+						<card v-bind:name="stack[0+(card - 1) * 4]"></card>
+						</td>
+						<td class="text-center">
+							{{2+(card - 1) * 4}}<br>
+						<card v-bind:name="stack[1+(card - 1) * 4]"></card>
+						</td>
+						<td class="text-center">
+							{{3+(card - 1) * 4}}<br>
+						<card v-bind:name="stack[2+(card - 1) * 4]"></card>
+						</td>
+						<td class="text-center">
+							{{4+(card - 1) * 4}}<br>
+						<card v-bind:name="stack[3+(card - 1) * 4]"></card>
+						</td>
 					</tr>
 				</table>
 			</div>
