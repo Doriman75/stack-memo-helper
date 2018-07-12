@@ -24,7 +24,7 @@
 <body >
 <div id="stack-memo-helper" class="container-fluid">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="">Stack Memo Helper <i>{{current_stack}}</i></a>
+  <a class="navbar-brand" href="">Stack Memo Helper <small><strong>{{current_stack}}</strong></small></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -91,8 +91,15 @@
 				<button type="button" class="mx-1 col-9 btn" v-bind:class="current_stack==name?'btn-success btn-lg':'btn-secondary btn-sm'" @click="deck = stack"><span v-if="deck == stack" class="oi oi-check"></span> {{name}}</button>
 				<button type="button" class="mx-1 col-2 btn btn-info btn-sm" @click="toggleViewStacks(name)">{{!view_stacks[name]? 'View':'Hide'}}</button>				
 			</div>
-			<div class=" row py-2" v-if="view_stacks[name]">
-				<div class="col-3 bg-light small" v-for="(card, index) in stack">{{1+index}}-<card v-bind:name="card"></card></div>
+			<div class="row py-2" v-if="view_stacks[name]">
+				<table class="table table-sm table-striped">
+					<tr v-for="(card, index) in stack.length/4">
+						<td>{{1+(card - 1) * 4}}</td><td class="small border-right"><card v-bind:name="stack[(card - 1) * 4]"></card></td>
+						<td>{{2+(card - 1) * 4}}</td><td class="small border-right"><card v-bind:name="stack[1+(card - 1) * 4]"></card></td>
+						<td>{{3+(card - 1) * 4}}</td><td class="small border-right"><card v-bind:name="stack[2+(card - 1) * 4]"></card></td>
+						<td>{{4+(card - 1) * 4}}</td><td class="small"><card v-bind:name="stack[3+(card - 1) * 4]"></card></td>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</div>
