@@ -20,6 +20,12 @@ self.addEventListener('install', e => {
   )
 });
 
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+	console.log("ready to install");
+});
+
+
 self.addEventListener('activate',  event => {
   console.log('PWA Service Worker activating.');  
   event.waitUntil(self.clients.claim());
