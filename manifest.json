@@ -7,7 +7,7 @@
       "sizes": "48x48 96x96 144x144 192x192 512x512"
     }
   ],
-  "start_url": "/",
+  "start_url": "index.html",
   "display": "fullscreen",
   "lang": "en-US",
   "background_color": "#ffffff",
