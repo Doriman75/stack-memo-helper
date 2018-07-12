@@ -2,6 +2,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="open-iconic-bootstrap.min.css">
+
+
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -21,7 +24,7 @@
 <body >
 <div id="stack-memo-helper" class="container-fluid">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="">Stack Memo Helper</a>
+  <a class="navbar-brand" href="">Stack Memo Helper <i>{{current_stack}}</i></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -69,16 +72,31 @@
 	</div>
 </div>
 
-<div v-if="page == 'settings'" class="row align-items-center col">  
-	<div class="col-12"><label class="col" for="number-of-choices">Number of Choices</label></div>
-	<div class="col-8">
-		<div class="progress" style="height: 40px;">
-			<div class="progress-bar bg-success" role="progressbar" v-bind:style="number_of_choices_in_percent" v-bind:aria-valuenow="number_of_choices" aria-valuemin="2" aria-valuemax="10">{{number_of_choices}}</div>
+<div v-if="page == 'settings'" class="row align-items-center col">
+	<div class="col">
+		<div class="col-12"><label class="col" for="number-of-choices">Number of Choices</label></div>
+		<div class="btn-group btn-group-lg col-12">
+			<button type="button" class="btn btn-primary" @click="sub()"><span class="oi oi-caret-left"></span></button>
+			<div class="progress col" style="height: 40px;">
+				<div class="progress-bar bg-info" role="progressbar" v-bind:style="number_of_choices_in_percent" v-bind:aria-valuenow="number_of_choices" aria-valuemin="2" aria-valuemax="10">{{number_of_choices}}</div>
+			</div>
+			<button type="button" class="btn btn-primary" @click="add()"><span class="oi oi-caret-right"></span></span></button>
 		</div>
 	</div>
-	<div class="col-2 px-1 py-2"><button type="button" class="col  btn btn-primary btn-lg" @click="sub()">-</button></div>
-	<div class="col-2 px-1 py-2"><button type="button" class="col  btn btn-primary btn-lg" @click="add()">+</button></div>
-	<hr>
+	<hr class="col-12">
+	<div class="col">
+		<div class="col-12"><label class="col" for="number-of-choices">Stack</label></div>
+		<div class="col-12 py-2" v-for="(stack, name) in decks">
+			<div class="row">
+				<button type="button" class="mx-1 col-9 btn" v-bind:class="current_stack==name?'btn-success btn-lg':'btn-secondary btn-sm'" @click="deck = stack"><span v-if="deck == stack" class="oi oi-check"></span> {{name}}</button>
+				<button type="button" class="mx-1 col-2 btn btn-info btn-sm" @click="toggleViewStacks(name)">{{!view_stacks[name]? 'View':'Hide'}}</button>				
+			</div>
+			<div class=" row py-2" v-if="view_stacks[name]">
+				<div class="col-3 bg-light small" v-for="(card, index) in stack">{{1+index}}-<card v-bind:name="card"></card></div>
+			</div>
+		</div>
+	</div>
+	
 </div>
 
 
@@ -90,7 +108,7 @@
         <h5 class="modal-title">Wrong Card!</h5>
       </div>
       <div class="modal-body">
-        <div style="font-size:1.5em" class="col text-center">
+        <div style="font-size:1.2em" class="col text-center">
 			the position of <card v-bind:name="correct_card"></card> is 
 			<br>
 			{{ 1+ deck.indexOf(correct_card) }}
@@ -112,7 +130,7 @@
         <h5 class="modal-title">Wrong Position!</h5>
       </div>
       <div class="modal-body">
-        <div style="font-size:1.5em" class="col text-center">
+        <div style="font-size:1.2em" class="col text-center">
 			the card at position {{correct_position}} is 
 			<br>
 			<card v-bind:name="deck[correct_position-1]"></card>
@@ -128,6 +146,11 @@
 </div>
 <script src="card.vue.js"></script>
 <script src="stack-memo-helper.js"></script>
+<script>
+$('.navbar-nav>li>a').on('click', function(){
+    $('.navbar-collapse').collapse('hide');
+});
+</script>
 
 </body>
 </html>

@@ -3,7 +3,14 @@ var tamariz = [
 					"8H", "6S", "5S", "9H", "KC", "2D", "JH", "3S", "8S", "6H", "10C", "5D", "KD",
 					"2C", "3H", "8D", "5C", "KS", "JD", "8C", "10S", "KH", "JC", "7S", "10H", "AD",
 					"4S", "7H", "4D", "AC", "9C", "JS", "QD", "7C", "QS", "10D", "6C", "AH", "9D"
-				];
+			];
+			
+var aronson = [
+					"JS", "KC", "5C", "2H", "9S", "AS", "3H", "6C", "8D", "AC", "10S", "5H", "2D",
+					"KD", "7D", "8C", "3S", "AD", "7S", "5S", "QD", "AH", "8S", "3D", "7H", "QH",
+					"5D", "7C", "4H", "KH", "4D", "10D", "JC", "JH", "10C", "JD", "4S", "10H", "6H",
+					"3C", "2S", "9H", "KS", "6S", "4C", "8H", "9C", "QS", "6D", "QC", "2C", "9D" 
+];
 
 var app = new Vue({
   el: '#stack-memo-helper',
@@ -16,7 +23,12 @@ var app = new Vue({
 	correct_card: null,
 	current_position: null,
 	correct_position: null,
-	deck: tamariz,
+	view_stacks: {},
+	decks: {
+		"Tamariz": tamariz,
+		"Aronson": aronson
+	},
+	deck: null,
 	card_choices: null,
 	position_choices: null,
 	page: null,
@@ -32,6 +44,10 @@ var app = new Vue({
 	number_of_choices_in_percent: function()
 	{
 		return "width: " + 10 * this.number_of_choices + "%";
+	},
+	current_stack: function()
+	{
+		return Object.keys(this.decks).filter(name => this.decks[name] == this.deck)[0];
 	}
   },
   methods: {
@@ -48,11 +64,13 @@ var app = new Vue({
 	
 	init: function()
 	{
+		this.deck = localStorage.getItem("deck") || this.decks["Tamariz"];
 		this.current_card = this.randomCard();
 		this.current_position = this.randomPosition();
 		this.card_choices = this.randomPositions(1+this.deck.indexOf(this.current_card));
 		this.position_choices = this.randomCards(this.deck[this.current_position - 1]);
 		this.page = this.load("page") || "card2position";
+		for(var name in this.decks) this.view_stacks[name] = false;
 	},
 	randomPosition: function()
 	{
@@ -100,6 +118,12 @@ var app = new Vue({
 	load: function(key)
 	{
 		return localStorage.getItem(key);
+	},
+	toggleViewStacks: function(name)
+	{
+		var v = JSON.parse(JSON.stringify(this.view_stacks));
+		v[name] = !v[name];
+		this.view_stacks = v;
 	}
   }
 })
