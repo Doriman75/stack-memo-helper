@@ -1,0 +1,16 @@
+{
+  "short_name": "SMH",
+  "name": "Stack Memo Helper",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "48x48 96x96 144x144 192x192 512x512"
+    }
+  ],
+  "start_url": "/",
+  "display": "fullscreen",
+  "lang": "en-US",
+  "background_color": "#ffffff",
+  "theme_color": "#5bb1f9",
+  "orientation": "portrait-primary"
+}
