@@ -5,15 +5,15 @@ self.addEventListener('install', e => {
     caches.open('smh_service_worker').then(cache => {
       return cache.addAll([
 		'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
-        '/',
+        'index.html',
 		'open-iconic-bootstrap.min.css',
 		'https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js',
 		'https://code.jquery.com/jquery-3.2.1.slim.min.js',
 		'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js',
 		'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js',
-		'/open-iconic.woff',
-		'/card.vue.js',
-		'/stack-memo-helper.js'
+		'open-iconic.woff',
+		'card.vue.js',
+		'stack-memo-helper.js'
       ])
       .then(() => self.skipWaiting());
     })
