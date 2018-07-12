@@ -5,7 +5,7 @@ self.addEventListener('install', e => {
     caches.open('smh_service_worker').then(cache => {
       return cache.addAll([
 		'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
-        'index.html',
+        '/stack-memo-helper/index.html',
 		'open-iconic-bootstrap.min.css',
 		'https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js',
 		'https://code.jquery.com/jquery-3.2.1.slim.min.js',
