@@ -1,3 +1,4 @@
+// build script
 const fs = require("fs");
 
 var lines = fs.readFileSync("index-orig.html", "utf-8").split("\n");
