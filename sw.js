@@ -4,13 +4,7 @@ self.addEventListener('install', e => {
   e.waitUntil(
     caches.open('smh_service_worker').then(cache => {
       return cache.addAll([
-          'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
-          'https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js',
-          'https://code.jquery.com/jquery-3.2.1.slim.min.js',
-          'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js',
-          'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js',
           'index.html',
-          'open-iconic-bootstrap.min.css',
           'open-iconic.woff'
         ])
         .then(() => self.skipWaiting());
