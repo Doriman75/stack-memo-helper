@@ -5,160 +5,167 @@
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" href="open-iconic-bootstrap.min.css">
-
+<link rel="shortcut icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 <script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js')
-  .then(function(registration) {
-    console.log('Registration successful, scope is:', registration.scope);
-  })
-  .catch(function(error) {
-    console.log('Service worker registration failed, error:', error);
-  });
-}
-</script>
-
-
-<style>
-.C, .S{
-	color: black;
-}
-.H, .D{
-	color: red;
+    .then(function(registration) {
+      console.log('Registration successful, scope is:', registration.scope);
+    })
+    .catch(function(error) {
+      console.log('Service worker registration failed, error:', error);
+    });
 }
 
-#card {
-	font-size: 6em;
+
+
+var tamariz = [
+  "4C", "2H", "7D", "3C", "4H", "6D", "AS", "5H", "9S", "2S", "QH", "3D", "QC",
+  "8H", "6S", "5S", "9H", "KC", "2D", "JH", "3S", "8S", "6H", "10C", "5D", "KD",
+  "2C", "3H", "8D", "5C", "KS", "JD", "8C", "10S", "KH", "JC", "7S", "10H", "AD",
+  "4S", "7H", "4D", "AC", "9C", "JS", "QD", "7C", "QS", "10D", "6C", "AH", "9D"
+];
+
+var aronson = [
+  "JS", "KC", "5C", "2H", "9S", "AS", "3H", "6C", "8D", "AC", "10S", "5H", "2D",
+  "KD", "7D", "8C", "3S", "AD", "7S", "5S", "QD", "AH", "8S", "3D", "7H", "QH",
+  "5D", "7C", "4H", "KH", "4D", "10D", "JC", "JH", "10C", "JD", "4S", "10H", "6H",
+  "3C", "2S", "9H", "KS", "6S", "4C", "8H", "9C", "QS", "6D", "QC", "2C", "9D"
+];
+
+var nikola = [
+  "6D", "5C", "KC", "JH", "5S", "9D", "9S", "QH", "3C", "10C", "KS", "AH", "4D",
+  "JD", "KD", "KH", "2D", "QC", "9C", "10H", "8D", "2C", "AC", "7H", "7C", "4S",
+  "7S", "9H", "8S", "6S", "6C", "2H", "AS", "JS", "4C", "5H", "10S", "AD", "JC",
+  "4H", "2S", "7D", "QS", "3H", "3S", "8C", "10D", "6H", "5D", "3D", "QD", "8H"
+];
+
+var aragon = [
+  "JS", "7C", "10H", "AD", "4C", "7H", "4D", "AS", "4H", "7D", "4S", "AH", "10D",
+  "7S", "JC", "KD", "10S", "8C", "JH", "AC", "KS", "5C", "8H", "3D", "QS", "KH",
+  "9C", "QH", "6C", "9H", "2D", "3C", "6H", "5D", "2S", "3H", "8D", "5S", "KC",
+  "JD", "8S", "10C", "2C", "5H", "6D", "3S", "2H", "9D", "6S", "QC", "QD", "9S"
+];
+
+
+
+
+var decks = {
+  "Tamariz": tamariz,
+  "Aronson": aronson,
+  "Nikola": nikola,
+  "Aragòn": aragon
 }
-</style>
-<body >
-<div id="stack-memo-helper" class="container-fluid">
+
+function randomPosition() {
+  return 1 + Math.floor(52 * Math.random());
+}
+
+function randomPositions(fixed) {
+  let set = new Set([fixed]);
+  var number_of_choices = parseInt(localStorage.getItem("number_of_choices") || "8");
+  while (set.size < number_of_choices) set.add(randomPosition());
+  return Array.from(set).sort((a, b) => a - b);
+}
+
+function randomCard(deck) {
+  return deck[this.randomPosition() - 1];
+}
+
+function randomCards(deck, fixed) {
+  let set = new Set([fixed]);
+  var number_of_choices = parseInt(localStorage.getItem("number_of_choices") || "8");
+  while (set.size < number_of_choices) set.add(randomCard(deck));
+  return Array.from(set).sort();
+}
+Vue.component("card", {
+  props: ['name'],
+  data: function() {
+    return {
+      symbols: {
+        "C": "&clubs;",
+        "S": "&spades;",
+        "H": "&hearts;",
+        "D": "&diams;"
+      }
+    }
+  },
+template: `
+<span v-if="name" class="font-weight-bold" v-bind:class="name.charAt(name.length - 1)">
+  <span>{{name.substring(0, name.length - 1)}}</span>
+<span v-html="symbols[name.substring(name.length - 1)]"></span>
+</span>
+`
+});
+Vue.component("navbar", {
+  created: function() {
+    this.$emit("page-change", this.page);
+  },
+  data: function() {
+    return {
+      page: localStorage.getItem("page") || "card2position",
+      menu: {
+        "card2position": "Card to Position",
+        "position2card": "Position to Card",
+        "settings": "Settings"
+      }
+    }
+  },
+  methods: {
+    save: function(value) {
+      localStorage.setItem("page", value);
+      return value;
+    }
+  },
+  watch: {
+    page: function(val) {
+      this.$emit("page-change", val)
+    }
+  },
+template: `
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="">Stack Memo Helper </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item" v-bind:class="page=='card2number'?'active':''">
-        <a class="nav-link" href="#" @click.prevent="page = save('page', 'card2position')">Card to Position </a>
-      </li>
-      <li class="nav-item" v-bind:class="page=='number2card'?'active':''">
-        <a class="nav-link" href="#" @click.prevent="page = save('page', 'position2card')">Position to Card </a>
-      </li>
-      <li class="nav-item" v-bind:class="page=='settings'?'active':''">
-        <a class="nav-link" href="#" @click.prevent="page = save('page', 'settings')">Settings </a>
+      <li class="nav-item" v-for="(description, item) in menu" v-bind:class="page==item?'active':''">
+        <a class="nav-link" href="#" @click.prevent="page = save(item)">{{description}}</a>
       </li>
     </ul>
   </div>
 </nav>
+`
+});
 
-<div v-if="page == 'card2position'">
-	<small><strong>{{current_stack}}</strong></small>
-	<div id="card">
-		<div class="row">
-			<div class="col text-center border "><card v-bind:name="current_card"></card></div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-6 px-1 py-2" v-for="(position) in card_choices">
-		<button class="btn btn-warning btn-lg btn-block col"  v-on:click="guessCard(position)">{{position}}</button>
-		</div>
-	</div>
-</div>
-
-
-<div v-if="page == 'position2card'">  
-	<small><strong>{{current_stack}}</strong></small>
-	<div id="card">
-		<div class="row">
-			<div class="col text-center border font-weight-bold">{{current_position}}</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-6 px-1 py-2" v-for="(card) in position_choices">
-		<button class="btn btn-warning btn-lg btn-block col"  v-on:click="guessNumber(card)"><card v-bind:name="card"></card></button>
-		</div>
-	</div>
-</div>
-
-<div v-if="page == 'settings'" class="row align-items-center col">
-	<div class="col">
-		<div class="col-12"><label class="col" for="number-of-choices">Number of Choices</label></div>
-		<div class="btn-group btn-group-lg col-12">
-			<button type="button" class="btn btn-primary" @click="sub()"><span class="oi oi-caret-left"></span></button>
-			<div class="progress col" style="height: 40px;">
-				<div class="progress-bar bg-info" role="progressbar" v-bind:style="number_of_choices_in_percent" v-bind:aria-valuenow="number_of_choices" aria-valuemin="2" aria-valuemax="10">{{number_of_choices}}</div>
-			</div>
-			<button type="button" class="btn btn-primary" @click="add()"><span class="oi oi-caret-right"></span></span></button>
-		</div>
-	</div>
-	<hr class="col-12">
-	<div class="col">
-		<div class="col-12"><label class="col" for="number-of-choices">Stack</label></div>
-		<div class="col-12 py-2" v-for="(stack, name) in decks">
-			<div class="row">
-				<button type="button" class="mx-1 col-9 btn" v-bind:class="current_stack==name?'btn-success btn-lg':'btn-secondary btn-sm'" @click="deck = stack"><span v-if="deck == stack" class="oi oi-check"></span> {{name}}</button>
-				<button type="button" class="mx-1 col-2 btn btn-info btn-sm" @click="toggleViewStacks(name)">{{!view_stacks[name]? 'View':'Hide'}}</button>				
-			</div>
-			<div class="row py-2" v-if="view_stacks[name]">
-				<table class="table table-sm table-striped table-bordered">
-					<tr v-for="(card, index) in stack.length/4">
-						<td class="text-center">
-							{{1+(card - 1) * 4}}<br>
-						<card v-bind:name="stack[0+(card - 1) * 4]"></card>
-						</td>
-						<td class="text-center">
-							{{2+(card - 1) * 4}}<br>
-						<card v-bind:name="stack[1+(card - 1) * 4]"></card>
-						</td>
-						<td class="text-center">
-							{{3+(card - 1) * 4}}<br>
-						<card v-bind:name="stack[2+(card - 1) * 4]"></card>
-						</td>
-						<td class="text-center">
-							{{4+(card - 1) * 4}}<br>
-						<card v-bind:name="stack[3+(card - 1) * 4]"></card>
-						</td>
-					</tr>
-				</table>
-			</div>
-		</div>
-	</div>
-	
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="wrongCardModal" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header bg-danger text-white">
-        <h5 class="modal-title">Wrong Card!</h5>
-      </div>
-      <div class="modal-body">
-        <div style="font-size:1.2em" class="col text-center">
-			the position of <card v-bind:name="correct_card"></card> is 
-			<br>
-			{{ 1+ deck.indexOf(correct_card) }}
-		</div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="newCard()">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Modal -->
+setTimeout(() => {
+  $('.navbar-nav>li>a').on('click', function() {
+    $('.navbar-collapse').collapse('hide');
+  });
+}, 2000)
+Vue.component("wrong-position", {
+  data: function() {
+    return {
+      "position": 1,
+      "card": "4C"
+    };
+  },
+  created: function() {
+    this.$root.$on("wrong-position", (x) => {
+      this.position = x.position;
+      this.card = x.card;
+      $('#wrongPositionModal').modal('show')
+    });
+  },
+template: `
 <div class="modal fade" id="wrongPositionModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -167,26 +174,271 @@ if ('serviceWorker' in navigator) {
       </div>
       <div class="modal-body">
         <div style="font-size:1.2em" class="col text-center">
-			the card at position {{correct_position}} is 
-			<br>
-			<card v-bind:name="deck[correct_position-1]"></card>
-		</div>
+
+          the card
+          <card v-bind:name="card"></card> is at <br> position {{position}}
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="newPosition()">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="$root.$emit('new-card')">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+`
+});
+Vue.component("wrong-card", {
+  data: function() {
+    return {
+      "position": 1,
+      "card": "4C"
+    };
+  },
+  created: function() {
+    this.$root.$on("wrong-card", (x) => {
+      this.position = x.position;
+      this.card = x.card;
+      $('#wrongCardModal').modal('show')
+    });
+  },
+template: `
+<div class="modal fade" id="wrongCardModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title">Wrong Position!</h5>
+      </div>
+      <div class="modal-body">
+        <div style="font-size:1.2em" class="col text-center">
+          At position {{position}} there is <br> the
+          <card v-bind:name="card"></card>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="$root.$emit('new-position')">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+`
+});
+Vue.component("card2position", {
+  created: function() {
+    this.newCard();
+    this.$root.$on("new-card", this.newCard);
+  },
+  data: function() {
+    return {
+      card: null,
+      choices: [],
+      stack: JSON.parse(localStorage.getItem("stack")) || tamariz,
+      stack_name: localStorage.getItem("stack_name") || "Tamariz"
+    }
+  },
+  methods: {
+    newCard: function() {
+      this.card = this.stack[randomPosition() - 1];
+      this.choices = randomPositions(1 + this.stack.indexOf(this.card));
+    },
+    check: function(position) {
+      if (this.stack[position - 1] != this.card) this.$root.$emit('wrong-position', {
+        position: 1 + this.stack.indexOf(this.card),
+        card: this.card
+      });
+      else this.newCard();
+    },
+  },
+template: `
+<div>
+  <small><strong>{{stack_name}}</strong></small>
+  <div id="card">
+    <div class="col text-center border " style="font-size:6em">
+      <card v-bind:name="card"></card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6 px-1 py-2" v-for="(position) in choices">
+      <button class="btn btn-warning btn-lg btn-block col" v-on:click="check(position)">{{position}}</button>
+    </div>
+  </div>
+</div>
+
+`
+});
+Vue.component("position2card", {
+  created: function() {
+    this.newPosition();
+    this.$root.$on("new-position", this.newPosition);
+  },
+  data: function() {
+    return {
+      position: null,
+      choices: [],
+      stack: JSON.parse(localStorage.getItem("stack")) || tamariz,
+      stack_name: localStorage.getItem("stack_name") || "Tamariz"
+    }
+  },
+  methods: {
+    newPosition: function() {
+      this.position = randomPosition();
+      this.choices = randomCards(this.stack, this.stack[this.position - 1]);
+    },
+    check: function(card) {
+      if (this.stack.indexOf(card) + 1 != this.position) this.$root.$emit('wrong-card', {
+        position: this.position,
+        card: this.stack[this.position - 1]
+      });
+      else this.newPosition();
+    },
+  },
+template: `
+<div>
+  <small><strong>{{stack_name}}</strong></small>
+  <div class="row">
+    <div class="col text-center border " style="font-size:6em">{{position}}</div>
+  </div>
+  <div class="row">
+    <div class="col-6 px-1 py-2" v-for="(card) in choices">
+      <button class="btn btn-warning btn-lg btn-block col" v-on:click="check(card)"><card v-bind:name="card"></card></button>
+    </div>
+  </div>
+</div>
+
+`
+});
+Vue.component("settings", {
+  data: function() {
+    return {
+      number_of_choices: parseInt(localStorage.getItem('number_of_choices')) || 8,
+      stack_name: localStorage.getItem('stack_name') || "Tamariz",
+      stack: JSON.parse(localStorage.getItem('stack')) || tamariz,
+      view_stacks: {},
+      stacks: decks
+    }
+  },
+  computed: {
+    number_of_choices_in_percent: function() {
+      return "width: " + 10 * this.number_of_choices + "%";
+    }
+  },
+  props: ['decks'],
+  methods: {
+    changeStack: function(stack_name, stack) {
+      localStorage.setItem("stack", JSON.stringify(stack));
+      localStorage.setItem("stack_name", stack_name)
+      this.$root.$emit('change-stack');
+      this.stack = stack;
+      this.stack_name = stack_name;
+    },
+    add: function() {
+      if (this.number_of_choices < 10) this.number_of_choices++;
+      localStorage.setItem("number_of_choices", this.number_of_choices);
+    },
+    sub: function() {
+      if (this.number_of_choices > 2) this.number_of_choices--;
+      localStorage.setItem("number_of_choices", this.number_of_choices);
+    },
+    toggleViewStacks: function(name) {
+      var v = JSON.parse(JSON.stringify(this.view_stacks));
+      v[name] = !v[name];
+      this.view_stacks = v;
+    }
+  },
+template: `
+<div class="col-12">
+  <div class="col">
+    <div class="col-12"><label class="col" for="number-of-choices">Number of Choices</label></div>
+    <div class="btn-group btn-group-lg col-12">
+      <button type="button" class="btn btn-primary" @click="sub()"><span class="oi oi-caret-left"></span></button>
+      <div class="progress col" style="height: 40px;">
+        <div class="progress-bar bg-info" role="progressbar" v-bind:style="number_of_choices_in_percent" v-bind:aria-valuenow="number_of_choices" aria-valuemin="2" aria-valuemax="10">{{number_of_choices}}</div>
+      </div>
+      <button type="button" class="btn btn-primary" @click="add()"><span class="oi oi-caret-right"></span></span></button>
+    </div>
+  </div>
+  <hr class="col-12">
+  <div class="col">
+    <div class="col-12"><label class="col" for="number-of-choices">Stack</label></div>
+    <div class="col-12 py-2" v-for="(deck, name) in stacks">
+      <div class="row">
+        <button type="button" class="mx-1 col-9 btn" v-bind:class="stack_name==name?'btn-success btn-lg':'btn-secondary btn-sm'" @click="changeStack(name, deck)"><span v-if="deck == stack" class="oi oi-check"></span> {{name}}</button>
+        <button type="button" class="mx-1 col-2 btn btn-info btn-sm" @click="toggleViewStacks(name)">{{!view_stacks[name]? 'View':'Hide'}}</button>
+      </div>
+      <div class="row py-2" v-if="view_stacks[name]">
+        <table class="table table-sm table-striped table-bordered">
+          <tr v-for="(card, index) in stack.length/4">
+            <td class="text-center">
+              {{1+(card - 1) * 4}}<br>
+              <card v-bind:name="stack[0+(card - 1) * 4]"></card>
+            </td>
+            <td class="text-center">
+              {{2+(card - 1) * 4}}<br>
+              <card v-bind:name="stack[1+(card - 1) * 4]"></card>
+            </td>
+            <td class="text-center">
+              {{3+(card - 1) * 4}}<br>
+              <card v-bind:name="stack[2+(card - 1) * 4]"></card>
+            </td>
+            <td class="text-center">
+              {{4+(card - 1) * 4}}<br>
+              <card v-bind:name="stack[3+(card - 1) * 4]"></card>
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
   </div>
 </div>
 
-</div>
-<script src="card.vue.js"></script>
-<script src="stack-memo-helper.js"></script>
-<script>
-$('.navbar-nav>li>a').on('click', function(){
-    $('.navbar-collapse').collapse('hide');
+`
 });
 </script>
 
+
+<style>
+  .C,
+  .S {
+    color: black;
+  }
+
+  .H,
+  .D {
+    color: red;
+  }
+</style>
+
+<body>
+  <div id="stack-memo-helper" class="container-fluid">
+    <navbar v-on:page-change="page = $event"></navbar>
+
+    <div v-if="page == 'card2position'">
+      <card2position></card2position>
+    </div>
+
+    <div v-if="page == 'position2card'">
+      <position2card></position2card>
+    </div>
+
+    <div v-if="page == 'settings'" class="row align-items-center col">
+      <settings></settings>
+    </div>
+
+    <wrong-position></wrong-position>
+    <wrong-card></wrong-card>
+
+  </div>
+
+<script>
+var app = new Vue({
+  el: '#stack-memo-helper',
+  data: {
+    page: localStorage.getItem("page") || "card2position"
+  }
+})
+</script>
+
+
 </body>
+
 </html>
+

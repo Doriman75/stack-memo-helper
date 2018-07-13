@@ -1,0 +1,8 @@
+[
+  {
+    "srcDir": ".",
+    "destDir": ".",
+    "files": "**/*.*",
+    "command": "node build.js > index.html"
+  }
+]

@@ -1,0 +1,67 @@
+<html>
+<meta charset="utf-8">
+<meta name="theme-color" content="#5bb1f9">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="open-iconic-bootstrap.min.css">
+<link rel="shortcut icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script>
+§ util.js
+§ card.vue.js
+§ navbar.vue.js
+§ wrong-position.vue.js
+§ wrong-card.vue.js
+§ card2position.vue.js
+§ position2card.vue.js
+§ settings.vue.js
+</script>
+
+
+<style>
+  .C,
+  .S {
+    color: black;
+  }
+
+  .H,
+  .D {
+    color: red;
+  }
+</style>
+
+<body>
+  <div id="stack-memo-helper" class="container-fluid">
+    <navbar v-on:page-change="page = $event"></navbar>
+
+    <div v-if="page == 'card2position'">
+      <card2position></card2position>
+    </div>
+
+    <div v-if="page == 'position2card'">
+      <position2card></position2card>
+    </div>
+
+    <div v-if="page == 'settings'" class="row align-items-center col">
+      <settings></settings>
+    </div>
+
+    <wrong-position></wrong-position>
+    <wrong-card></wrong-card>
+
+  </div>
+
+<script>
+§ stack-memo-helper.js
+</script>
+
+
+</body>
+
+</html>

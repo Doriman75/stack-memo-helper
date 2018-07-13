@@ -1,0 +1,44 @@
+<div class="col-12">
+  <div class="col">
+    <div class="col-12"><label class="col" for="number-of-choices">Number of Choices</label></div>
+    <div class="btn-group btn-group-lg col-12">
+      <button type="button" class="btn btn-primary" @click="sub()"><span class="oi oi-caret-left"></span></button>
+      <div class="progress col" style="height: 40px;">
+        <div class="progress-bar bg-info" role="progressbar" v-bind:style="number_of_choices_in_percent" v-bind:aria-valuenow="number_of_choices" aria-valuemin="2" aria-valuemax="10">{{number_of_choices}}</div>
+      </div>
+      <button type="button" class="btn btn-primary" @click="add()"><span class="oi oi-caret-right"></span></span></button>
+    </div>
+  </div>
+  <hr class="col-12">
+  <div class="col">
+    <div class="col-12"><label class="col" for="number-of-choices">Stack</label></div>
+    <div class="col-12 py-2" v-for="(deck, name) in stacks">
+      <div class="row">
+        <button type="button" class="mx-1 col-9 btn" v-bind:class="stack_name==name?'btn-success btn-lg':'btn-secondary btn-sm'" @click="changeStack(name, deck)"><span v-if="deck == stack" class="oi oi-check"></span> {{name}}</button>
+        <button type="button" class="mx-1 col-2 btn btn-info btn-sm" @click="toggleViewStacks(name)">{{!view_stacks[name]? 'View':'Hide'}}</button>
+      </div>
+      <div class="row py-2" v-if="view_stacks[name]">
+        <table class="table table-sm table-striped table-bordered">
+          <tr v-for="(card, index) in stack.length/4">
+            <td class="text-center">
+              {{1+(card - 1) * 4}}<br>
+              <card v-bind:name="stack[0+(card - 1) * 4]"></card>
+            </td>
+            <td class="text-center">
+              {{2+(card - 1) * 4}}<br>
+              <card v-bind:name="stack[1+(card - 1) * 4]"></card>
+            </td>
+            <td class="text-center">
+              {{3+(card - 1) * 4}}<br>
+              <card v-bind:name="stack[2+(card - 1) * 4]"></card>
+            </td>
+            <td class="text-center">
+              {{4+(card - 1) * 4}}<br>
+              <card v-bind:name="stack[3+(card - 1) * 4]"></card>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

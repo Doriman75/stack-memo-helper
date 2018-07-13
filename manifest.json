@@ -5,8 +5,34 @@
     {
       "src": "icon-512.png",
 	  "type": "image/png",
-      "sizes": "48x48 96x96 144x144 192x192 512x512"
+      "sizes": "512x512"
+    },
+	{
+      "src": "icon-64.png",
+	  "type": "image/png",
+      "sizes": "64x64"
+    },
+	{
+      "src": "icon-48.png",
+	  "type": "image/png",
+      "sizes": "48x48"
+    },
+	{
+      "src": "icon-96.png",
+	  "type": "image/png",
+      "sizes": "96x96"
+    },
+	{
+      "src": "icon-144.png",
+	  "type": "image/png",
+      "sizes": "144x144"
+    },
+	{
+      "src": "icon-192.png",
+	  "type": "image/png",
+      "sizes": "192x192"
     }
+
   ],
   "start_url": "index.html",
   "display": "fullscreen",
