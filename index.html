@@ -11332,22 +11332,10 @@ template: `
     <button type="button" class="mx-1 col btn btn-info btn-sm" @click="toggleViewStacks(name)">{{!view_stacks[name]? 'View':'Hide'}}</button>
     <div class="col-12 py-2" v-if="view_stacks[name]">
       <table class="table table-sm table-striped table-bordered">
-        <tr v-for="(card, index) in stack.length/4">
-          <td class="text-center">
-            {{1+(card - 1) * 4}}<br>
-            <card v-bind:name="stack[0+(card - 1) * 4]"></card>
-          </td>
-          <td class="text-center">
-            {{2+(card - 1) * 4}}<br>
-            <card v-bind:name="stack[1+(card - 1) * 4]"></card>
-          </td>
-          <td class="text-center">
-            {{3+(card - 1) * 4}}<br>
-            <card v-bind:name="stack[2+(card - 1) * 4]"></card>
-          </td>
-          <td class="text-center">
-            {{4+(card - 1) * 4}}<br>
-            <card v-bind:name="stack[3+(card - 1) * 4]"></card>
+        <tr v-for="(stack, index) in deck.length/4">
+          <td class="text-center" v-for="(offset) in [1,2,3,4]">
+            {{offset+index * 4}}<br>
+            <card v-bind:name="deck[offset - 1 + index * 4]"></card>
           </td>
         </tr>
       </table>
