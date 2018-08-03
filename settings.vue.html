@@ -15,7 +15,7 @@
     <div class="col-12 py-2" v-if="view_stacks[name]">
       <table class="table table-sm table-striped table-bordered">
         <tr v-for="(stack, index) in deck.length/4">
-          <td class="text-center" v-for="(offset) in [1,2,3,4]">
+          <td class="text-center large" v-for="(offset) in [1,2,3,4]">
             {{offset+index * 4}}<br>
             <card v-bind:name="deck[offset - 1 + index * 4]"></card>
           </td>
