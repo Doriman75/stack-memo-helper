@@ -2,7 +2,7 @@
   "name": "stack-memo-helper",
   "version": "1.0.0",
   "description": "This is a simple Progressive Web App to test your ability to memorize a stack.\r It supports Tamariz, Aronson, Aragòn and Nikola",
-  "main": "stack-memo-helper.js",
+  "main": "",
   "directories": {
     "lib": "lib"
   },
@@ -14,7 +14,7 @@
     "url": "git+https://github.com/Doriman75/stack-memo-helper.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Doriman75/stack-memo-helper/issues"
   },
