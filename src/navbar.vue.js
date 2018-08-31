@@ -23,7 +23,7 @@ Vue.component("navbar", {
       this.$emit("page-change", val)
     }
   },
-  template: §navbar.vue.html
+  template: `@include("navbar.vue.html")`
 });
 
 setTimeout(() => {

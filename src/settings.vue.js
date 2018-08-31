@@ -36,5 +36,5 @@ Vue.component("settings", {
       this.view_stacks = v;
     }
   },
-  template: §settings.vue.html
+  template: `@include("settings.vue.html")`
 });

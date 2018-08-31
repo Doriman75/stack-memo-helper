@@ -12,5 +12,5 @@ Vue.component("wrong-card", {
       $('#wrongCardModal').modal('show')
     });
   },
-  template: § "wrong-card.vue.html"
+  template: `@include("wrong-card.vue.html")`
 });

@@ -3,12 +3,11 @@
 <meta name="theme-color" content="#5bb1f9">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="manifest" href="manifest.json">
-<link rel="shortcut icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="shortcut icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
 
 <style>
-§ bootstrap.min.css
-
-§ open-iconic-bootstrap.min.css
+@include("lib/css/bootstrap.min.css");
+@include("lib/css/open-iconic-bootstrap.min.css")
 
 .large{
   font-size: 1.5em;
@@ -16,18 +15,18 @@
 </style>
 
 <script>
-§ vue.js
-§ jquery-3.2.1.slim.min.js
-§ popper.min.js
-§ bootstrap.min.js
-§ util.js
-§ card.vue.js
-§ navbar.vue.js
-§ wrong-position.vue.js
-§ wrong-card.vue.js
-§ card2position.vue.js
-§ position2card.vue.js
-§ settings.vue.js
+@include("lib/js/vue.js")
+@include("lib/js/jquery-3.2.1.slim.min.js");
+@include("lib/js/popper.min.js");
+@include("lib/js/bootstrap.min.js");
+@include("util.js")
+@include("card.vue.js")
+@include("navbar.vue.js")
+@include("wrong-position.vue.js")
+@include("wrong-card.vue.js")
+@include("card2position.vue.js")
+@include("position2card.vue.js")
+@include("settings.vue.js")
 </script>
 
 
@@ -65,7 +64,7 @@
   </div>
 
 <script>
-§ stack-memo-helper.js
+@include("stack-memo-helper.js")
 </script>
 
 <noscript>

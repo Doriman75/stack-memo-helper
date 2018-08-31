@@ -24,5 +24,5 @@ Vue.component("position2card", {
       else this.newPosition();
     },
   },
-  template: §position2card.vue.html
+  template: `@include("position2card.vue.html")`
 });

@@ -10,5 +10,5 @@ Vue.component("card", {
       }
     }
   },
-  template: §card.vue.html
+  template: `@include("card.vue.html")`
 });

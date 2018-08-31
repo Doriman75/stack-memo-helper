@@ -12,5 +12,5 @@ Vue.component("wrong-position", {
       $('#wrongPositionModal').modal('show')
     });
   },
-  template: § "wrong-position.vue.html"
+  template: `@include("wrong-position.vue.html")`
 });
