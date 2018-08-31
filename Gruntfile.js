@@ -1,5 +1,8 @@
 module.exports = function(grunt) {
   grunt.initConfig({
+    clean: {
+      dist: "dist/*"
+    },
     includereplace: {
       options: {
         prefix: "@"
@@ -29,8 +32,9 @@ module.exports = function(grunt) {
       }
     }
   });
+  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks("grunt-include-replace");
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.registerTask("default", ["includereplace", "copy"])
+  grunt.registerTask("default", ["clean", "includereplace", "copy"])
 }
